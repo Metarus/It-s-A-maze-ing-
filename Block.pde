@@ -6,20 +6,57 @@ class Block
     x=_x;
     y=_y;
   }
-  boolean white;
-  boolean start;
-  boolean end;
+  int identifier;
+  boolean white, start, end;
+  int topLeft, topRight, bottomLeft, bottomRight;
   void display()
   {
-    if (white||start||end) 
+    if (start||end)
+    {
+      white=true;
+    }
+
+    if (identifier>gridWidth&&identifier%gridWidth!=0)
+    {
+      if (blocks.get(identifier-1).white||blocks.get(identifier-gridWidth).white)
+      {
+        topLeft=0;
+      } else topLeft=10;
+    } else topLeft=0;
+
+    if (identifier>gridWidth&&identifier%gridWidth!=gridWidth-1)
+    {
+      if (blocks.get(identifier+1).white||blocks.get(identifier-gridWidth).white)
+      {
+        topRight=0;
+      } else topRight=10;
+    } else topRight=0;
+
+    if (identifier<(gridWidth*gridHeight)-gridWidth&&identifier%gridWidth!=0)
+    {
+      if (blocks.get(identifier-1).white||blocks.get(identifier+gridWidth).white)
+      {
+        bottomLeft=0;
+      } else bottomLeft=10;
+    } else bottomLeft=0;
+
+    if (identifier<(gridWidth*gridHeight)-gridWidth&&identifier%gridWidth!=gridWidth-1)
+    {
+      if (blocks.get(identifier+1).white||blocks.get(identifier+gridWidth).white)
+      {
+        bottomRight=0;
+      } else bottomRight=10;
+    } else bottomRight=0;
+
+    if (white) 
     {
       fill(255);
     } else 
     {
       fill(0);
     }
-    rect(x, y, width/gridWidth, height/gridHeight, 10);
-    if (white||start||end) 
+    rect(x, y, width/gridWidth, height/gridHeight, topLeft, topRight, bottomRight, bottomLeft);
+    if (white) 
     {
       fill(0);
     } else 

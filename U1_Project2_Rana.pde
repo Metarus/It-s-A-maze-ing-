@@ -63,6 +63,7 @@ void draw()
     {
       Block part=blocks.get(i);
       part.display();
+      part.identifier=i;
       //text(i, part.x+10, part.y+20);
     }
     if (generation%gridWidth!=gridWidth-1)
