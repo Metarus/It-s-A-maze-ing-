@@ -1,45 +1,57 @@
 int generation;
 int end;
+int gridWidth=20;
+int gridHeight=20;
 ArrayList<Block> blocks = new ArrayList<Block>();
 boolean genUp=true, genDown=true, genLeft=true, genRight=true;
 
 void setup()
 {
+  noStroke();
   //frameRate(200);
   fullScreen();
-  for (int i=0; i<10; i++)
+  background(0);
+  for (int i=0; i<gridHeight; i++)
   {
-    for (int j=0; j<10; j++)
+    for (int j=0; j<gridWidth; j++)
     {
-      blocks.add(new Block((width/10)*j, (height/10)*i));
+      blocks.add(new Block((width/gridWidth)*j, (height/gridHeight)*i));
     }
   }
-  int l=(int)random(10);
+  int l;
   switch((int)random(4))
   {
   case 0:
+    l=(int)random(gridWidth);
+
     blocks.get(l).start=true;
-    blocks.get(99-l).end=true;
+    blocks.get((gridWidth*gridHeight-1)-l).end=true;
     generation=l;
-    end=99-l;
+    end=(gridWidth*gridHeight-1)-l;
     break;
   case 1:
-    blocks.get(l*10).start=true;
-    blocks.get(99-(l*10)).end=true;
-    generation=l*10;
-    end=99-(l*10);
+    l=(int)random(gridHeight);
+
+    blocks.get(l*gridHeight).start=true;
+    blocks.get((gridWidth*gridHeight-1)-(l*gridHeight)).end=true;
+    generation=l*gridHeight;
+    end=(gridWidth*gridHeight-1)-(l*gridHeight);
     break;
   case 2:
-    blocks.get(l+90).start=true;
-    blocks.get(99-(l+90)).end=true;
-    generation=l+90;
-    end=99-(l+90);
+    l=(int)random(gridWidth);
+
+    blocks.get(l+(gridWidth*(gridHeight-1))).start=true;
+    blocks.get((gridWidth*gridHeight-1)-(l+(gridWidth*(gridHeight-1)))).end=true;
+    generation=l+(gridWidth*(gridHeight-1));
+    end=(gridWidth*gridHeight-1)-(l+(gridWidth*(gridHeight-1)));
     break;
   case 3:
-    blocks.get(l*10+9).start=true;
-    blocks.get(99-(l*10+9)).end=true;
-    generation=l*10+9;
-    end=99-(l*10+9);
+    l=(int)random(gridHeight);
+
+    blocks.get(l*gridWidth+(gridWidth-1)).start=true;
+    blocks.get((gridWidth*gridHeight-1)-(l*gridWidth+(gridWidth-1))).end=true;
+    generation=l*gridWidth+(gridWidth-1);
+    end=(gridWidth*gridHeight-1)-(l*gridWidth+(gridWidth-1));
     break;
   }
 }
@@ -47,39 +59,39 @@ void draw()
 {  
   if (generation!=end)
   {
-    for (int i=0; i<100; i++)
+    for (int i=0; i<gridWidth*gridHeight; i++)
     {
       Block part=blocks.get(i);
       part.display();
-      text(i, part.x+10, part.y+20);
+      //text(i, part.x+10, part.y+20);
     }
-    if (generation%10!=9)
+    if (generation%gridWidth!=gridWidth-1)
     {
-      if (blocks.get(generation+1).black)
+      if (blocks.get(generation+1).white)
       {
         genRight=false;
       } else genRight=true;
     } else genRight=false; 
 
-    if (generation%10!=0)
+    if (generation%gridWidth!=0)
     {
-      if (blocks.get(generation-1).black)
+      if (blocks.get(generation-1).white)
       {
         genLeft=false;
       } else genLeft=true;
     } else genLeft=false; 
 
-    if (generation<90)
+    if (generation<(gridWidth*gridHeight)-gridWidth)
     {
-      if (blocks.get(generation+10).black)
+      if (blocks.get(generation+gridWidth).white)
       {
         genDown=false;
       } else genDown=true;
     } else genDown=false;
 
-    if (generation>9)
+    if (generation>gridWidth-1)
     {
-      if (blocks.get(generation-10).black)
+      if (blocks.get(generation-gridWidth).white)
       {
         genUp=false;
       } else genUp=true;
@@ -103,17 +115,17 @@ void draw()
     case 2:
       if (genDown)
       {
-        generation+=10;
+        generation+=gridWidth;
       }
       break;
     case 3:
       if (genUp)
       {
-        generation-=10;
+        generation-=gridWidth;
       }
       break;
     }
-    blocks.get(generation).black=true;
+    blocks.get(generation).white=true;
 
     if (genUp==false&&genDown==false&&genRight==false&&genLeft==false)
     {
