@@ -67,5 +67,9 @@ class Block
     {
       text("END", x+10, y+30);
     }
+    if (start)
+    {
+      text("START", x+10, y+30);
+    }
   }
 }
