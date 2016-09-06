@@ -7,15 +7,15 @@ class Block
     y=_y;
   }
   int identifier;
-  boolean white, start, end;
+  boolean white, start, end, segment;
   int topLeft, topRight, bottomLeft, bottomRight;
   void display()
   {
-    if (start||end)
+    if (start)
     {
+      segment=true;
       white=true;
     }
-
     if (identifier>gridWidth&&identifier%gridWidth!=0)
     {
       if (blocks.get(identifier-1).white||blocks.get(identifier-gridWidth).white)
@@ -54,6 +54,10 @@ class Block
     } else 
     {
       fill(0);
+    }
+    if(segment)
+    {
+      fill(240);
     }
     rect(x, y, width/gridWidth, height/gridHeight, topLeft, topRight, bottomRight, bottomLeft);
     if (white) 

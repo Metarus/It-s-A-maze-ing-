@@ -68,17 +68,17 @@ void draw()
   }
   if (generating)
   {
-    if (generation%gridWidth<gridWidth-3)
+    if (generation%gridWidth<gridWidth-2)
     {
-      if (blocks.get(generation+2).white&&blocks.get(generation+2).end==false)
+      if (blocks.get(generation+2).white)
       {
         genRight=false;
       } else genRight=true;
     } else genRight=false; 
 
-    if (generation%gridWidth>3)
+    if (generation%gridWidth>1)
     {
-      if (blocks.get(generation-2).white&&blocks.get(generation-2).end==false)
+      if (blocks.get(generation-2).white)
       {
         genLeft=false;
       } else genLeft=true;
@@ -86,7 +86,7 @@ void draw()
 
     if (generation<(gridWidth*gridHeight)-(2*gridWidth))
     {
-      if (blocks.get(generation+(2*gridWidth)).white&&blocks.get(generation+(2*gridWidth)).end==false)
+      if (blocks.get(generation+(2*gridWidth)).white)
       {
         genDown=false;
       } else genDown=true;
@@ -94,7 +94,7 @@ void draw()
 
     if (generation>2*gridWidth-1)
     {
-      if (blocks.get(generation-(2*gridWidth)).white&&blocks.get(generation-(2*gridWidth)).end==false)
+      if (blocks.get(generation-(2*gridWidth)).white)
       {
         genUp=false;
       } else genUp=true;
@@ -110,6 +110,7 @@ void draw()
         blocks.get(generation).white=true;
         generation++;
         blocks.get(generation).white=true;
+        blocks.get(generation).segment=true;
       }
       break;
     case 1:
@@ -119,6 +120,7 @@ void draw()
         blocks.get(generation).white=true;
         generation--;
         blocks.get(generation).white=true;
+        blocks.get(generation).segment=true;
       }
       break;
     case 2:
@@ -128,6 +130,7 @@ void draw()
         blocks.get(generation).white=true;
         generation+=gridWidth;
         blocks.get(generation).white=true;
+        blocks.get(generation).segment=true;
       }
       break;
     case 3:
@@ -137,46 +140,21 @@ void draw()
         blocks.get(generation).white=true;
         generation-=gridWidth;
         blocks.get(generation).white=true;
+        blocks.get(generation).segment=true;
       }
       break;
     }
-    if (genRight)
-    {
-      if (generation+1==end)
-      {
-        generating=false;
-      }
-    }
-    if (genLeft)
-    {
-      if (generation-1==end)
-      {
-        generating=false;
-      }
-    }
-    if (genDown)
-    {
-      if (generation+gridWidth==end)
-      {
-        generating=false;
-      }
-    }
-    if (genUp)
-    {
-      if (generation-gridWidth==end)
-      {
-        generating=false;
-      }
-    }
-    
-    if(generation==end)
+    //genTest();
+
+    if (generation==end)
     {
       generating=false;
     }
 
     if (genUp==false&&genDown==false&&genRight==false&&genLeft==false)
     {
-      reset();
+      //reset();
+      generating=false;
     }
   } else generating=false;
 
@@ -188,10 +166,10 @@ void draw()
   {
     reset();
   }
-  if (keyPressed)
+  if (generating==false)
   {
     int i=(int)random(gridWidth*gridHeight);
-    if (blocks.get(i).white)
+    if (blocks.get(i).segment&&blocks.get(i).end==false)
     {
       generation=i;
       generating=true;
