@@ -21,7 +21,7 @@ class Block
       if (blocks.get(identifier-1).white||blocks.get(identifier-gridWidth).white)
       {
         topLeft=0;
-      } else topLeft=10;
+      } else topLeft=30;
     } else topLeft=0;
 
     if (identifier>gridWidth&&identifier%gridWidth!=gridWidth-1)
@@ -29,7 +29,7 @@ class Block
       if (blocks.get(identifier+1).white||blocks.get(identifier-gridWidth).white)
       {
         topRight=0;
-      } else topRight=10;
+      } else topRight=30;
     } else topRight=0;
 
     if (identifier<(gridWidth*gridHeight)-gridWidth&&identifier%gridWidth!=0)
@@ -37,7 +37,7 @@ class Block
       if (blocks.get(identifier-1).white||blocks.get(identifier+gridWidth).white)
       {
         bottomLeft=0;
-      } else bottomLeft=10;
+      } else bottomLeft=30;
     } else bottomLeft=0;
 
     if (identifier<(gridWidth*gridHeight)-gridWidth&&identifier%gridWidth!=gridWidth-1)
@@ -45,7 +45,7 @@ class Block
       if (blocks.get(identifier+1).white||blocks.get(identifier+gridWidth).white)
       {
         bottomRight=0;
-      } else bottomRight=10;
+      } else bottomRight=30;
     } else bottomRight=0;
 
     if (white) 
@@ -57,7 +57,7 @@ class Block
     }
     if(segment)
     {
-      fill(240);
+      fill(245);
     }
     if(start)
     {
