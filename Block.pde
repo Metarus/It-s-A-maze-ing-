@@ -59,21 +59,14 @@ class Block
     {
       fill(240);
     }
+    if(start)
+    {
+      fill(255,0,0);
+    }
+    if(end)
+    {
+      fill(0,0,255);
+    }
     rect(x, y, width/gridWidth, height/gridHeight, topLeft, topRight, bottomRight, bottomLeft);
-    if (white) 
-    {
-      fill(0);
-    } else 
-    {
-      fill(255);
-    }
-    if (end)
-    {
-      text("END", x+10, y+30);
-    }
-    if (start)
-    {
-      text("START", x+10, y+30);
-    }
   }
 }
