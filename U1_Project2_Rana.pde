@@ -1,7 +1,8 @@
 int generation;
 int end;
-int gridWidth=20;
-int gridHeight=20;
+int gridWidth=21;
+int gridHeight=21;
+int start;
 ArrayList<Block> blocks = new ArrayList<Block>();
 boolean genUp=true, genDown=true, genLeft=true, genRight=true, generating=true;
 
@@ -54,6 +55,7 @@ void setup()
     end=(gridWidth*gridHeight-1)-(l*gridWidth+(gridWidth-1));
     break;
   }
+  start=generation;
 }
 void draw()
 {
@@ -66,33 +68,33 @@ void draw()
   }
   if (generating)
   {
-    if (generation%gridWidth!=gridWidth-1)
+    if (generation%gridWidth<gridWidth-3)
     {
-      if (blocks.get(generation+1).white&&blocks.get(generation+1).end==false)
+      if (blocks.get(generation+2).white&&blocks.get(generation+2).end==false)
       {
         genRight=false;
       } else genRight=true;
     } else genRight=false; 
 
-    if (generation%gridWidth!=0)
+    if (generation%gridWidth>3)
     {
-      if (blocks.get(generation-1).white&&blocks.get(generation-1).end==false)
+      if (blocks.get(generation-2).white&&blocks.get(generation-2).end==false)
       {
         genLeft=false;
       } else genLeft=true;
     } else genLeft=false; 
 
-    if (generation<(gridWidth*gridHeight)-gridWidth)
+    if (generation<(gridWidth*gridHeight)-(2*gridWidth))
     {
-      if (blocks.get(generation+gridWidth).white&&blocks.get(generation+gridWidth).end==false)
+      if (blocks.get(generation+(2*gridWidth)).white&&blocks.get(generation+(2*gridWidth)).end==false)
       {
         genDown=false;
       } else genDown=true;
     } else genDown=false;
 
-    if (generation>gridWidth-1)
+    if (generation>2*gridWidth-1)
     {
-      if (blocks.get(generation-gridWidth).white&&blocks.get(generation-gridWidth).end==false)
+      if (blocks.get(generation-(2*gridWidth)).white&&blocks.get(generation-(2*gridWidth)).end==false)
       {
         genUp=false;
       } else genUp=true;
@@ -105,24 +107,36 @@ void draw()
       if (genRight)
       {
         generation++;
+        blocks.get(generation).white=true;
+        generation++;
+        blocks.get(generation).white=true;
       }
       break;
     case 1:
       if (genLeft)
       {
         generation--;
+        blocks.get(generation).white=true;
+        generation--;
+        blocks.get(generation).white=true;
       }
       break;
     case 2:
       if (genDown)
       {
         generation+=gridWidth;
+        blocks.get(generation).white=true;
+        generation+=gridWidth;
+        blocks.get(generation).white=true;
       }
       break;
     case 3:
       if (genUp)
       {
         generation-=gridWidth;
+        blocks.get(generation).white=true;
+        generation-=gridWidth;
+        blocks.get(generation).white=true;
       }
       break;
     }
@@ -154,7 +168,11 @@ void draw()
         generating=false;
       }
     }
-    blocks.get(generation).white=true;
+    
+    if(generation==end)
+    {
+      generating=false;
+    }
 
     if (genUp==false&&genDown==false&&genRight==false&&genLeft==false)
     {
@@ -169,6 +187,15 @@ void draw()
   if (mousePressed)
   {
     reset();
+  }
+  if (keyPressed)
+  {
+    int i=(int)random(gridWidth*gridHeight);
+    if (blocks.get(i).white)
+    {
+      generation=i;
+      generating=true;
+    }
   }
 }
 void reset()
