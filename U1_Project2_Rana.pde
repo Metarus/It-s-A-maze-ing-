@@ -4,12 +4,14 @@ int gridWidth=19;
 int gridHeight=19;
 int start;
 ArrayList<Block> blocks = new ArrayList<Block>();
-boolean genUp=true, genDown=true, genLeft=true, genRight=true, generating=true;
+boolean genUp=true, genDown=true, genLeft=true, genRight=true, generating=true, resetting, go, genEnd;
+
+Player player=new Player();
 
 void setup()
 {
   noStroke();
-  frameRate(999999);
+  //frameRate(60);
   fullScreen();
   background(0);
   for (int i=0; i<gridHeight; i++)
@@ -59,14 +61,20 @@ void setup()
 }
 void draw()
 {
+  background(0);
   for (int i=0; i<gridWidth*gridHeight; i++)
   {
     Block part=blocks.get(i);
-    part.display();
+    part.update();
     part.identifier=i;
+    if (part.died)
+    {
+      part.died=false;
+      resetting=true;
+    }
     //text(i, part.x+10, part.y+20);
   }
-  if (generating)
+  if (generating&&genEnd==false)
   {
     if (generation%gridWidth<gridWidth-2)
     {
@@ -157,14 +165,17 @@ void draw()
       generating=false;
     }
   } else generating=false;
-
-  if (generating==false)
-  {
-    println("Done");
-  }
-  if (mousePressed)
+  if (keyPressed)
   {
     reset();
+    go=false;
+    genEnd=false;
+  }
+  if(mousePressed)
+  {
+    go=true;
+    genEnd=true;
+    resetting=true;
   }
   if (generating==false)
   {
@@ -174,6 +185,10 @@ void draw()
       generation=i;
       generating=true;
     }
+  }
+  if (go)
+  {
+    player.update();
   }
 }
 void reset()

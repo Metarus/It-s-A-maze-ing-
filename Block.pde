@@ -1,6 +1,7 @@
 class Block
 {
   int x, y;
+  boolean died;
   Block(int _x, int _y)
   {
     x=_x;
@@ -9,7 +10,7 @@ class Block
   int identifier;
   boolean white, start, end, segment;
   int topLeft, topRight, bottomLeft, bottomRight;
-  void display()
+  void update()
   {
     if (start)
     {
@@ -68,5 +69,17 @@ class Block
       fill(0,0,255);
     }
     rect(x, y, width/gridWidth, height/gridHeight, topLeft, topRight, bottomRight, bottomLeft);
+    if(player.x>x&&player.x<(x+width/gridWidth)&&player.y>y&&player.y<(y+height/gridHeight)&&white==false)
+    {
+      died=true;
+    }
+    if(resetting&&start)
+    {
+      player.x=x+((width/gridWidth)/2);
+      player.y=y+((height/gridHeight)/2);
+      fill(255);
+      text("DIED",player.x,player.y);
+      resetting=false;
+    }
   }
 }
