@@ -1,7 +1,7 @@
 int generation;
 int end;
-int gridWidth=23;
-int gridHeight=23;
+int gridWidth=9;
+int gridHeight=9;
 int start;
 int cellWidth;
 int cellHeight;
