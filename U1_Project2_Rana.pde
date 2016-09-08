@@ -1,7 +1,7 @@
 int generation;
 int end;
-int gridWidth=19;
-int gridHeight=19;
+int gridWidth=9;
+int gridHeight=9;
 int start;
 ArrayList<Block> blocks = new ArrayList<Block>();
 boolean genUp=true, genDown=true, genLeft=true, genRight=true, generating=true, resetting, go, genEnd;

@@ -56,30 +56,39 @@ class Block
     {
       fill(0);
     }
-    if(segment)
+    if (segment)
     {
       fill(245);
     }
-    if(start)
+    if (start)
     {
-      fill(255,0,0);
+      fill(255, 0, 0);
     }
-    if(end)
+    if (end)
     {
-      fill(0,0,255);
+      fill(0, 0, 255);
     }
     rect(x, y, width/gridWidth, height/gridHeight, topLeft, topRight, bottomRight, bottomLeft);
-    if(player.x>x&&player.x<(x+width/gridWidth)&&player.y>y&&player.y<(y+height/gridHeight)&&white==false)
+    if (player.x>x&&player.x<(x+width/gridWidth)&&player.y>y&&player.y<(y+height/gridHeight)&&white==false)
     {
       died=true;
     }
-    if(resetting&&start)
+    if (resetting&&start)
     {
       player.x=x+((width/gridWidth)/2);
       player.y=y+((height/gridHeight)/2);
       fill(255);
-      text("DIED",player.x,player.y);
+      text("DIED", player.x, player.y);
       resetting=false;
+    }
+    if (player.x>x&&player.x<(x+width/gridWidth)&&player.y>y&&player.y<(y+height/gridHeight)&&end)
+    {
+      gridWidth+=2;
+      gridHeight+=2;
+      died=true;
+      reset();
+      go=false;
+      genEnd=false;
     }
   }
 }
