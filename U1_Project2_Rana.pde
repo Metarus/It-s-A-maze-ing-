@@ -1,8 +1,10 @@
 int generation;
 int end;
-int gridWidth=9;
-int gridHeight=9;
+int gridWidth=23;
+int gridHeight=23;
 int start;
+int cellWidth;
+int cellHeight;
 ArrayList<Block> blocks = new ArrayList<Block>();
 boolean genUp=true, genDown=true, genLeft=true, genRight=true, generating=true, resetting, go, genEnd;
 
@@ -10,10 +12,13 @@ Player player=new Player();
 
 void setup()
 {
+  noCursor();
   noStroke();
   //frameRate(60);
   fullScreen();
   background(0);
+  cellWidth=width/gridWidth;
+  cellHeight=width/gridHeight;
   for (int i=0; i<gridHeight; i++)
   {
     for (int j=0; j<gridWidth; j++)
@@ -26,7 +31,10 @@ void setup()
   {
   case 0:
     l=(int)random(gridWidth);
-
+    if (l%2==1)
+    {
+      l++;
+    }
     blocks.get(l).start=true;
     blocks.get((gridWidth*gridHeight-1)-l).end=true;
     generation=l;
@@ -34,7 +42,10 @@ void setup()
     break;
   case 1:
     l=(int)random(gridHeight);
-
+    if (l%2==1)
+    {
+      l++;
+    }
     blocks.get(l*gridWidth).start=true;
     blocks.get((gridWidth*gridHeight-1)-(l*gridHeight)).end=true;
     generation=l*gridHeight;
@@ -42,7 +53,10 @@ void setup()
     break;
   case 2:
     l=(int)random(gridWidth);
-
+    if (l%2==1)
+    {
+      l++;
+    }
     blocks.get(l+(gridWidth*(gridHeight-1))).start=true;
     blocks.get((gridWidth*gridHeight-1)-(l+(gridWidth*(gridHeight-1)))).end=true;
     generation=l+(gridWidth*(gridHeight-1));
@@ -50,7 +64,10 @@ void setup()
     break;
   case 3:
     l=(int)random(gridHeight);
-
+    if (l%2==1)
+    {
+      l++;
+    }
     blocks.get(l*gridWidth+(gridWidth-1)).start=true;
     blocks.get((gridWidth*gridHeight-1)-(l*gridWidth+(gridWidth-1))).end=true;
     generation=l*gridWidth+(gridWidth-1);
@@ -171,7 +188,7 @@ void draw()
     go=false;
     genEnd=false;
   }
-  if(mousePressed)
+  if (mousePressed)
   {
     go=true;
     genEnd=true;
@@ -190,6 +207,8 @@ void draw()
   {
     player.update();
   }
+  fill(0, 0, 255);  
+  ellipse(mouseX, mouseY, 10, 10);
 }
 void reset()
 {

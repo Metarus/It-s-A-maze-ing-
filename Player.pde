@@ -17,7 +17,7 @@ class Player
     fill(255, 0, 255);
     ellipse(x, y, 10, 10);
     fill(0);
-    if (x<0||y<0||x>width||y>height)
+    if (x<0||y<0||x>cellWidth*gridWidth||y>cellHeight*gridHeight)
     {
       resetting=true;
     }
