@@ -18,7 +18,7 @@ void setup()
   fullScreen();
   background(0);
   cellWidth=width/gridWidth;
-  cellHeight=width/gridHeight;
+  cellHeight=height/gridHeight;
   for (int i=0; i<gridHeight; i++)
   {
     for (int j=0; j<gridWidth; j++)
