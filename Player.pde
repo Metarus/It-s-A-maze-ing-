@@ -3,6 +3,7 @@ class Player
   PVector v1=new PVector(0, 0);
 
   float x, y;
+  //Movement code and updating
   void update()
   {
     stroke(127);

@@ -12,11 +12,13 @@ class Block
   int topLeft, topRight, bottomLeft, bottomRight;
   void update()
   {
+    //Displaying
     if (start)
     {
       segment=true;
       white=true;
     }
+    //Doing the curviture
     if (identifier>gridWidth&&identifier%gridWidth!=0)
     {
       if (blocks.get(identifier-1).white||blocks.get(identifier-gridWidth).white)
@@ -69,6 +71,7 @@ class Block
       fill(0, 0, 255);
     }
     rect(x, y, width/gridWidth, height/gridHeight, topLeft, topRight, bottomRight, bottomLeft);
+    //Testing if the player is on the block and the block is black (so the player is dead
     if (player.x>x&&player.x<(x+width/gridWidth)&&player.y>y&&player.y<(y+height/gridHeight)&&white==false)
     {
       died=true;
@@ -81,6 +84,7 @@ class Block
       text("DIED", player.x, player.y);
       resetting=false;
     }
+    //Testing for the end
     if (player.x>x&&player.x<(x+width/gridWidth)&&player.y>y&&player.y<(y+height/gridHeight)&&end)
     {
       gridWidth+=2;

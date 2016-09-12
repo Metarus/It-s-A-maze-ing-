@@ -1,3 +1,8 @@
+/*
+Maze generation with player movement code turned into a basic game.
+Maze game
+*/
+
 int generation;
 int end;
 int gridWidth=9;
@@ -17,6 +22,7 @@ void setup()
   //frameRate(60);
   fullScreen();
   background(0);
+  //Sets the cellWidth and cellHeight which are very important
   cellWidth=width/gridWidth;
   cellHeight=height/gridHeight;
   for (int i=0; i<gridHeight; i++)
@@ -26,6 +32,7 @@ void setup()
       blocks.add(new Block((width/gridWidth)*j, (height/gridHeight)*i));
     }
   }
+  //Selecting a random start and finish based on opposites
   int l;
   switch((int)random(4))
   {
@@ -81,6 +88,7 @@ void draw()
   background(0);
   for (int i=0; i<gridWidth*gridHeight; i++)
   {
+    //Updating the blocks
     Block part=blocks.get(i);
     part.update();
     part.identifier=i;
@@ -89,10 +97,10 @@ void draw()
       part.died=false;
       resetting=true;
     }
-    //text(i, part.x+10, part.y+20);
   }
-  if (generating&&genEnd==false)
+  if (generating&&genEnd==false) //Generation code (Before mousePressed)
   {
+    //genLeft,Right,Up,Down are all variables which say if it can generate in those directions
     if (generation%gridWidth<gridWidth-2)
     {
       if (blocks.get(generation+2).white)
@@ -125,6 +133,7 @@ void draw()
       } else genUp=true;
     } else genUp=false;
 
+    //Choosing a random direction to generate in
     int randomGen=(int)random(4);
     switch(randomGen)
     {
@@ -169,25 +178,28 @@ void draw()
       }
       break;
     }
-    //genTest();
-
+    
+    //Makes it so that if it touches the end it stops and doesn't make multiple paths
     if (generation==end)
     {
       generating=false;
     }
-
+    //If it's stuck and can't go anywhere then start somewhere else
     if (genUp==false&&genDown==false&&genRight==false&&genLeft==false)
     {
-      //reset();
       generating=false;
     }
   } else generating=false;
+  
+  //Generate a new maze if a key is pressed
   if (keyPressed)
   {
     reset();
     go=false;
     genEnd=false;
   }
+  
+  //Make the character start moving and whatnot
   if (mousePressed)
   {
     go=true;
@@ -196,7 +208,9 @@ void draw()
   }
   if (generating==false)
   {
+    //Randomly select a block to begin generating from
     int i=(int)random(gridWidth*gridHeight);
+    //checks that it's a midpoint
     if (blocks.get(i).segment&&blocks.get(i).end==false)
     {
       generation=i;
@@ -205,13 +219,16 @@ void draw()
   }
   if (go)
   {
+    //Updates the player
     player.update();
   }
   fill(0, 0, 255);  
+  //The cursor
   ellipse(mouseX, mouseY, 10, 10);
 }
 void reset()
 {
+  //Clearing the blocks and running setup
   blocks.clear();
   genUp=true;
   genDown=true;
